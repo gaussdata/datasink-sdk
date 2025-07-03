@@ -67,26 +67,25 @@ export class Collector {
   }
 
   /**
-   * 获取当前时间戳
-   */
-  static getTimestamp(): number {
-    return Date.now();
-  }
-
-  /**
    * 收集所有可用的页面信息
    */
   static collectAll(): Record<string, any> {
+    const screenResolution = this.getScreenResolution();
+    const viewportSize = this.getViewportSize();
+
     return {
       url: this.getCurrentUrl(),
       title: this.getPageTitle(),
-      userAgent: this.getUserAgent(),
-      screenResolution: this.getScreenResolution(),
-      viewportSize: this.getViewportSize(),
-      devicePixelRatio: this.getDevicePixelRatio(),
-      language: this.getLanguage(),
       referrer: this.getReferrer(),
-      timestamp: this.getTimestamp()
+
+      dpr: this.getDevicePixelRatio(),
+      user_agent: this.getUserAgent(),
+      language: this.getLanguage(),
+
+      screen_width: screenResolution.width,
+      screen_height: screenResolution.height,
+      window_width: viewportSize.width,
+      window_height: viewportSize.height,
     };
   }
 
