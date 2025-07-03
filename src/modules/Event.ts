@@ -1,9 +1,11 @@
 import { Collector } from "./Collector";
 import { IdentityManager } from "./IdentityManager";
+import { version } from "../../package.json";
 
 export class GaussEvent {
     head = {
         code: '',
+        version: version, 
         time: Date.now(),
         aaid: IdentityManager.getAnonymousId(),
         sid: IdentityManager.getSessionId(),

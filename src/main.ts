@@ -1,10 +1,10 @@
 import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
-import { Reporter } from './Reporter.ts'
+import { setupCounter } from './counter'
+import GaussData from './Reporter'
 
-Reporter.getInstance();
+GaussData.getInstance();
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>

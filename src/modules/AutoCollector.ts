@@ -1,4 +1,4 @@
-import type { Reporter } from "../Reporter";
+import type Reporter from "../Reporter";
 
 /**
  * 自动埋点，监听页面加载、页面浏览、页面离开、元素点击等事件

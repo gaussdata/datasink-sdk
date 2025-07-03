@@ -2,7 +2,7 @@ import { AutoCollector } from "./modules/AutoCollector";
 import { GaussEvent } from "./modules/Event";
 import { Queue } from "./modules/Queue";
 
-export class Reporter {
+export default class Reporter {
 
     private static instance: Reporter;
 
