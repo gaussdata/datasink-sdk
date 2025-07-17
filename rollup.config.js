@@ -7,13 +7,13 @@ import json from '@rollup/plugin-json';
 export default {
   input: 'src/Reporter.ts', // 你的入口文件
   output: {
-    file: 'lib/gaussdata.js', // 输出文件路径
+    file: 'lib/gaussdata.min.js', // 输出文件路径
     format: 'umd', // UMD 格式
     name: 'GaussData', // UMD 导出的全局变量名
     globals: {
       // 如果有外部依赖，在这里声明
     },
-    sourcemap: true // 可选：生成 sourcemap
+    sourcemap: false // 可选：生成 sourcemap
   },
   plugins: [
     resolve(), // 解析 node_modules 中的模块
