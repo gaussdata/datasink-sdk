@@ -5,7 +5,8 @@ import { version } from "../../package.json";
 export class GaussEvent {
     head = {
         code: '',
-        version: version, 
+        lib: 'js',
+        lib_version: version, 
         time: Date.now(),
         aaid: IdentityManager.getAnonymousId(),
         sid: IdentityManager.getSessionId(),

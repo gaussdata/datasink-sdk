@@ -3,8 +3,8 @@
  */
 export class IdentityManager {
   // Cookie名称常量
-  private static readonly ANONYMOUS_ID_COOKIE = 'gd_anonymous_id';
-  private static readonly SESSION_ID_COOKIE = 'gd_session_id';
+  private static readonly ANONYMOUS_ID_COOKIE = 'ga_anonymous_id';
+  private static readonly SESSION_ID_COOKIE = 'ga_session_id';
   
   // 默认过期时间
   private static readonly ANONYMOUS_ID_EXPIRE_DAYS = 365 * 2; // 2年
