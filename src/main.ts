@@ -5,6 +5,7 @@ import { setupCounter } from './counter'
 import GaussData from './Reporter'
 
 GaussData.getInstance();
+GaussData.setUrl('http://localhost:3000/collector/t')
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
