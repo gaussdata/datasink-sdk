@@ -1,5 +1,22 @@
 import type Reporter from "../Reporter";
 
+function proxyHistory(api: 'pushState' | 'replaceState') {
+     const original = history[api];
+     history[api] = function(this: History, ...args: Parameters<History[typeof api]>) {
+        // 在这里可以添加代理逻辑，比如事件触发、日志记录等
+        console.log(`History.${api} called with:`, args);
+        // 调用原始方法
+        const result = original.apply(this, args);
+        // 可以在这里触发自定义事件
+        const event = new Event(api);
+        window.dispatchEvent(event);
+        return result;
+    };
+}
+
+proxyHistory('pushState');
+proxyHistory('replaceState')
+
 /**
  * 自动埋点，监听页面加载、页面浏览、页面离开、元素点击等事件
  */
@@ -19,6 +36,16 @@ export class AutoCollector {
             setTimeout(() => {
                 this.onPageView();
             })
+        })
+        window.addEventListener('pushState', () => {
+            setTimeout(() => {
+                this.onPageView()
+            }, 16);
+        })
+        window.addEventListener('replaceState', () => {
+            setTimeout(() => {
+                this.onPageView()
+            }, 16);
         })
         document.addEventListener('click', (e) => {
             this.onClick(e)
