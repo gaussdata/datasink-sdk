@@ -12,6 +12,7 @@ export class GaussEvent {
         sid: IdentityManager.getSessionId(),
     }
     body: Record<string, any> = {};
+
     constructor(code: string, data: Record<string, any>) {
         this.head.code = code;
         this.body = {

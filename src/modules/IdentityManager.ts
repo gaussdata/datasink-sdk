@@ -2,13 +2,12 @@
  * 用户标识管理工具类 - 管理持久Anonymous ID和会话Session ID
  */
 export class IdentityManager {
-  // Cookie名称常量
+  // Cookie 名称常量
   private static readonly ANONYMOUS_ID_COOKIE = 'ga_anonymous_id';
   private static readonly SESSION_ID_COOKIE = 'ga_session_id';
   
   // 默认过期时间
   private static readonly ANONYMOUS_ID_EXPIRE_DAYS = 365 * 2; // 2年
-  private static readonly SESSION_ID_EXPIRE_MINUTES = 30; // 30分钟(会话结束时过期)
 
   /**
    * 生成随机ID (32位十六进制字符串)
@@ -96,37 +95,14 @@ export class IdentityManager {
    */
   public static getSessionId(): string {
     let sessionId = this.getCookie(this.SESSION_ID_COOKIE);
-    
     if (!sessionId) {
       sessionId = this.generateRandomId();
       this.setCookie(
         this.SESSION_ID_COOKIE, 
-        sessionId, 
-        this.SESSION_ID_EXPIRE_MINUTES
+        sessionId
       );
-    }
-    
+    }    
     return sessionId;
   }
 
-  /**
-   * 重置会话ID(用于用户显式开始新会话)
-   */
-  public static resetSessionId(): string {
-    const newSessionId = this.generateRandomId();
-    this.setCookie(
-      this.SESSION_ID_COOKIE, 
-      newSessionId, 
-      this.SESSION_ID_EXPIRE_MINUTES
-    );
-    return newSessionId;
-  }
-
-  /**
-   * 清除所有用户标识
-   */
-  public static clearAll(): void {
-    this.setCookie(this.ANONYMOUS_ID_COOKIE, '', -1);
-    this.setCookie(this.SESSION_ID_COOKIE, '', -1);
-  }
 }

@@ -37,26 +37,18 @@ export class AutoCollector {
                 this.onPageView();
             })
         })
-        window.addEventListener('pushState', () => {
-            setTimeout(() => {
-                this.onPageView()
-            }, 16);
-        })
-        window.addEventListener('replaceState', () => {
-            setTimeout(() => {
-                this.onPageView()
-            }, 16);
-        })
-        document.addEventListener('click', (e) => {
-            this.onClick(e)
-        })
+        window.addEventListener('pushState', () => this.onPageChange())
+        window.addEventListener('replaceState', () => this.onPageChange())
+        window.addEventListener('popstate', () => this.onPageChange())
+        document.addEventListener('click', (e) => this.onClick(e))
     }
 
     private onClick(e: MouseEvent) {
         const element = e.target as HTMLElement;
         this.reporter?.track('$element_click', {
-            element_content: element.innerText,
             element_id: element.id,
+            element_class: element.className,
+            element_content: element.innerText,
             page_x: e.pageX,
             page_y: e.pageY
         })
@@ -66,14 +58,24 @@ export class AutoCollector {
         this.reporter?.track('$page_load', {})
     }
 
+    onPageChange() {
+        this.onPageLeave();
+        setTimeout(() => {
+            this.onPageView()
+        }, 16);
+    }
+
     onPageView() {
         this.startTime = Date.now();
-        this.reporter?.track('$page_view', {})
+        this.reporter?.track('$page_view', {
+            view_position: window.scrollY + window.innerHeight,
+        })
     }
 
     onPageLeave() {
         this.reporter?.track('$page_leave', {
-            duration: Date.now() - this.startTime
+            duration: Date.now() - this.startTime,
+            view_position: window.scrollY + window.innerHeight,
         })
     }
 }

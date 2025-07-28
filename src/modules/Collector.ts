@@ -2,25 +2,26 @@
  * 页面信息采集工具类
  */
 export class Collector {
-  /**
-   * 获取当前页面的完整URL
-   */
-  static getCurrentUrl(): string {
-    return window.location.href;
-  }
-
-  /**
-   * 获取页面标题
-   */
-  static getPageTitle(): string {
-    return document.title;
-  }
 
   /**
    * 获取用户代理(UserAgent)信息
    */
   static getUserAgent(): string {
     return navigator.userAgent;
+  }
+
+  /**
+   * 获取设备像素比
+   */
+  static getDevicePixelRatio(): number {
+    return window.devicePixelRatio || 1;
+  }
+
+  /**
+   * 获取页面语言设置
+   */
+  static getLanguage(): string {
+    return navigator.language;
   }
 
   /**
@@ -46,38 +47,17 @@ export class Collector {
   }
 
   /**
-   * 获取设备像素比
-   */
-  static getDevicePixelRatio(): number {
-    return window.devicePixelRatio || 1;
-  }
-
-  /**
-   * 获取页面语言设置
-   */
-  static getLanguage(): string {
-    return navigator.language;
-  }
-
-  /**
-   * 获取页面referrer信息
-   */
-  static getReferrer(): string {
-    return document.referrer;
-  }
-
-  /**
    * 收集所有可用的页面信息
    */
   static collectAll(): Record<string, any> {
     const screenResolution = this.getScreenResolution();
     const viewportSize = this.getViewportSize();
-
     return {
-      url: this.getCurrentUrl(),
-      title: this.getPageTitle(),
-      referrer: this.getReferrer(),
-
+      url: document.URL,
+      path: location.pathname,
+      title: document.title,
+      referrer: document.referrer,
+    
       dpr: this.getDevicePixelRatio(),
       user_agent: this.getUserAgent(),
       language: this.getLanguage(),
@@ -87,12 +67,5 @@ export class Collector {
       window_width: viewportSize.width,
       window_height: viewportSize.height,
     };
-  }
-
-  /**
-   * 将收集的信息转换为JSON字符串
-   */
-  static toJSON(): string {
-    return JSON.stringify(this.collectAll(), null, 2);
   }
 }
