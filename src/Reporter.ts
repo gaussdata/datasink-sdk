@@ -35,7 +35,7 @@ export default class Reporter {
         this.getInstance().url = url;
     }
 
-    public track(code: string, data: Record<string, any>) {
+    public track(code: string, data: Record<string, string | number | boolean>) {
         if ((window as any).doNotTrack || navigator.doNotTrack) {
             return;
         }

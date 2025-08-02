@@ -11,9 +11,9 @@ export class GaussEvent {
         aaid: IdentityManager.getAnonymousId(),
         sid: IdentityManager.getSessionId(),
     }
-    body: Record<string, any> = {};
+    body: Record<string, string | number | boolean> = {};
 
-    constructor(code: string, data: Record<string, any>) {
+    constructor(code: string, data: Record<string, string | number | boolean>) {
         this.head.code = code;
         this.body = {
             ...Collector.collectAll(),

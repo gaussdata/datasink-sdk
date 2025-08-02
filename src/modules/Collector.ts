@@ -49,7 +49,7 @@ export class Collector {
   /**
    * 收集所有可用的页面信息
    */
-  static collectAll(): Record<string, any> {
+  static collectAll(): Record<string, string | number | boolean> {
     const screenResolution = this.getScreenResolution();
     const viewportSize = this.getViewportSize();
     return {
