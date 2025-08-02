@@ -36,11 +36,14 @@ export default class Reporter {
     }
 
     public track(code: string, data: Record<string, any>) {
+        if ((window as any).doNotTrack || navigator.doNotTrack) {
+            return;
+        }
         const event = new GaussEvent(code, data);
         this.queue.enqueue(event);
     }
 
-  /**
+    /**
      * 消费队列数据，每10条合并为一个数组
      * @returns 二维数组，每个子数组最多包含10条数据
      */
