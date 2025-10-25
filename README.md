@@ -53,10 +53,8 @@ GaussData.track('product_view', { product_id: 'sku-001' })
 
 `track(code, data)` 会自动合并环境采集信息，并补充 `head`：
 
-- `code`：事件标识。
-- `lib`/`lib_version`：SDK 类型与版本（来自 `package.json`）。
-- `time`：事件生成时间戳。
-- `aaid`/`sid`：匿名 ID 与会话 ID。
+- `code`：自定义事件标识。
+- `data`：自定义事件数据，非嵌套的 JSON 格式。
 
 ## 上报与批处理
 
