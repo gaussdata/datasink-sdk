@@ -47,6 +47,63 @@ export class Collector {
   }
 
   /**
+   * 获取浏览器类型
+   */
+  static getBrowser() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf('Firefox') !== -1) {
+      return 'Firefox';
+    } else if (userAgent.indexOf('Chrome') !== -1) {
+      return 'Chrome';
+    } else if (userAgent.indexOf('Safari') !== -1) {
+      return 'Safari';
+    } else if (userAgent.indexOf('Opera') !== -1) {
+      return 'Opera';
+    } else if (userAgent.indexOf('MSIE') !== -1 || userAgent.indexOf('Trident') !== -1) {
+      return 'IE';
+    } else {
+      return 'Unknown';
+    }
+  }
+
+  /**
+   * 获取操作系统类型
+   */
+  static getOS() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf('Windows') !== -1) {
+      return 'Windows';
+    } else if (userAgent.indexOf('Macintosh') !== -1) {
+      return 'Mac';
+    } else if (userAgent.indexOf('Linux') !== -1) {
+      return 'Linux';
+    } else {
+      return 'Unknown';
+    }
+  }
+
+  /**
+   * 获取设备类型
+   */
+  static getDeviceType() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf('Mobile') !== -1) {
+      return 'Mobile';
+    } else if (userAgent.indexOf('Tablet') !== -1) {
+      return 'Tablet';
+    } else {
+      return 'Desktop';
+    }
+  }
+
+  /**
+   * 获取时区名称
+   */
+  static getTimezoneName() {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  }
+
+  /**
    * 收集所有可用的页面信息
    */
   static collectAll(): Record<string, string | number | boolean> {
@@ -61,7 +118,11 @@ export class Collector {
       dpr: this.getDevicePixelRatio(),
       user_agent: this.getUserAgent(),
       language: this.getLanguage(),
-
+      os: this.getOS(),
+      browser: this.getBrowser(),
+      device_type: this.getDeviceType(),
+      timezone: this.getTimezoneName(),
+      
       screen_width: screenResolution.width,
       screen_height: screenResolution.height,
       window_width: viewportSize.width,
