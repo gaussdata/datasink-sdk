@@ -48,7 +48,7 @@ export class AutoCollector {
     this.reporter?.track('$element_click', {
       element_id: element.id,
       element_class: element.className,
-      element_content: element.textContent,
+      element_content: element.textContent?.trim() || '',
       page_x: e.pageX,
       page_y: e.pageY,
     })
