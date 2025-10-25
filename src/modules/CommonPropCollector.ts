@@ -1,7 +1,7 @@
 /**
  * 页面信息采集工具类
  */
-export class Collector {
+export class CommonPropCollector {
   /**
    * 获取用户代理(UserAgent)信息
    */

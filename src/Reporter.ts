@@ -1,5 +1,5 @@
 import loglevel from 'loglevel'
-import { AutoCollector } from './modules/AutoCollector'
+import { AutoEventCollector } from './modules/AutoEventCollector'
 import { EventData } from './modules/EventData'
 import { Queue } from './modules/Queue'
 
@@ -21,7 +21,7 @@ export default class Reporter {
     this.timer = setInterval(() => {
       this.consume()
     }, 1000)
-    new AutoCollector().init(this)
+    new AutoEventCollector().init(this)
   }
 
   static getInstance() {

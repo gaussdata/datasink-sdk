@@ -1,14 +1,9 @@
 import type Reporter from '../Reporter'
-import loglevel from 'loglevel'
 
 function proxyHistory(api: 'pushState' | 'replaceState') {
   const original = history[api]
   history[api] = function (this: History, ...args: Parameters<History[typeof api]>) {
-    // 在这里可以添加代理逻辑，比如事件触发、日志记录等
-    loglevel.info(`History.${api} called with:`, args)
-    // 调用原始方法
     const result = original.apply(this, args)
-    // 可以在这里触发自定义事件
     const event = new Event(api)
     window.dispatchEvent(event)
     return result
@@ -21,7 +16,7 @@ proxyHistory('replaceState')
 /**
  * 自动埋点，监听页面加载、页面浏览、页面离开、元素点击等事件
  */
-export class AutoCollector {
+export class AutoEventCollector {
   reporter: Reporter | null = null
 
   startTime = Date.now()

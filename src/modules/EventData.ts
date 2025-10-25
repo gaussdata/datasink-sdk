@@ -1,5 +1,5 @@
 import { version } from '../../package.json'
-import { Collector } from './Collector'
+import { CommonPropCollector } from './CommonPropCollector'
 import { IdentityManager } from './IdentityManager'
 
 export class EventData {
@@ -17,7 +17,7 @@ export class EventData {
   constructor(code: string, data: Record<string, string | number | boolean>) {
     this.head.code = code
     this.body = {
-      ...Collector.collectAll(),
+      ...CommonPropCollector.collectAll(),
       ...data,
     }
   }

@@ -1,14 +1,14 @@
+// Cookie 名称常量
+const ANONYMOUS_ID_COOKIE = 'ga_anonymous_id'
+const SESSION_ID_COOKIE = 'ga_session_id'
+
+// 默认过期时间
+const ANONYMOUS_ID_EXPIRE = 2 * 365 * 24 * 60 * 60 * 1000 // 2年
+
 /**
  * 用户标识管理工具类 - 管理持久Anonymous ID和会话Session ID
  */
 export class IdentityManager {
-  // Cookie 名称常量
-  private static readonly ANONYMOUS_ID_COOKIE = 'ga_anonymous_id'
-  private static readonly SESSION_ID_COOKIE = 'ga_session_id'
-
-  // 默认过期时间
-  private static readonly ANONYMOUS_ID_EXPIRE_DAYS = 365 * 2 // 2年
-
   /**
    * 生成随机ID (32位十六进制字符串)
    * @param length 生成的ID长度(默认32)
@@ -39,14 +39,14 @@ export class IdentityManager {
    * 设置Cookie
    * @param name Cookie名称
    * @param value Cookie值
-   * @param expires 过期时间(分钟)
+   * @param expires 过期时间
    */
   private static setCookie(name: string, value: string, expires?: number): void {
     let expiresStr = ''
 
     if (expires !== undefined) {
       const date = new Date()
-      date.setTime(date.getTime() + (expires * 60 * 1000))
+      date.setTime(date.getTime() + expires)
       expiresStr = `expires=${date.toUTCString()};`
     }
 
@@ -78,14 +78,14 @@ export class IdentityManager {
    * 获取或创建匿名ID(持久存储)
    */
   public static getAnonymousId(): string {
-    let anonymousId = this.getCookie(this.ANONYMOUS_ID_COOKIE)
+    let anonymousId = this.getCookie(ANONYMOUS_ID_COOKIE)
 
     if (!anonymousId) {
       anonymousId = this.generateRandomId()
       this.setCookie(
-        this.ANONYMOUS_ID_COOKIE,
+        ANONYMOUS_ID_COOKIE,
         anonymousId,
-        this.ANONYMOUS_ID_EXPIRE_DAYS * 24 * 60,
+        ANONYMOUS_ID_EXPIRE,
       )
     }
 
@@ -96,11 +96,11 @@ export class IdentityManager {
    * 获取或创建会话ID(临时有效)
    */
   public static getSessionId(): string {
-    let sessionId = this.getCookie(this.SESSION_ID_COOKIE)
+    let sessionId = this.getCookie(SESSION_ID_COOKIE)
     if (!sessionId) {
       sessionId = this.generateRandomId()
       this.setCookie(
-        this.SESSION_ID_COOKIE,
+        SESSION_ID_COOKIE,
         sessionId,
       )
     }
