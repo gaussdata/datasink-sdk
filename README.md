@@ -3,6 +3,7 @@
 一个轻量、可扩展的前端埋点 SDK，用于在浏览器中收集页面信息与用户行为事件，并通过 `navigator.sendBeacon` 以批量方式上报到服务端。
 
 ## 功能特性
+
 - 自动采集：页面加载、浏览、离开、点击等事件（`$page_load`、`$page_view`、`$page_leave`、`$element_click`）。
 - 环境采集：URL、UA、语言、OS、浏览器、设备类型、时区、屏幕与视口尺寸等。
 - 身份标识：自动生成并维护匿名 ID（2 年）与会话 ID（Session）。
@@ -13,6 +14,7 @@
 ## 快速上手
 
 ### 方式一：通过 UMD 引入
+
 ```html
 <script src="/lib/gaussdata.min.js"></script>
 <script>
@@ -46,7 +48,7 @@ GaussData.track('login', { method: 'password' })
 ## 手动埋点
 
 ```ts
-GaussData.track('product_view', { product_id: 'sku-001' });
+GaussData.track('product_view', { product_id: 'sku-001' })
 ```
 
 `track(code, data)` 会自动合并环境采集信息，并补充 `head`：
@@ -70,4 +72,4 @@ GaussData.track('product_view', { product_id: 'sku-001' });
 
 ## 许可证
 
-本项目采用 MIT 许可证，详见 `LICENSE`。
+本项目采用 Apache License 2.0 许可证，详见 `LICENSE`。
