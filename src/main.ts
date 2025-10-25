@@ -1,10 +1,10 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
 import { setupCounter } from './counter'
 import GaussData from './Reporter'
+import typescriptLogo from './typescript.svg'
+import './style.css'
+import viteLogo from '/vite.svg'
 
-GaussData.getInstance();
+GaussData.getInstance()
 GaussData.setUrl('http://localhost:3000/collector/t')
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

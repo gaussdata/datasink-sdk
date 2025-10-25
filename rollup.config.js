@@ -1,8 +1,8 @@
-import typescript from 'rollup-plugin-typescript2';
-import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
-import json from '@rollup/plugin-json';
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import resolve from '@rollup/plugin-node-resolve'
+import { terser } from 'rollup-plugin-terser'
+import typescript from 'rollup-plugin-typescript2'
 
 export default {
   input: 'src/Reporter.ts', // 你的入口文件
@@ -13,7 +13,7 @@ export default {
     globals: {
       // 如果有外部依赖，在这里声明
     },
-    sourcemap: false // 可选：生成 sourcemap
+    sourcemap: false, // 可选：生成 sourcemap
   },
   plugins: [
     resolve(), // 解析 node_modules 中的模块
@@ -26,8 +26,8 @@ export default {
       emitDeclarationOnly: false,
       declaration: true,
     }),
-    terser()
+    terser(),
   ],
   // 如果有外部依赖，不希望打包进 bundle，在这里声明
-  external: []
-};
+  external: [],
+}
