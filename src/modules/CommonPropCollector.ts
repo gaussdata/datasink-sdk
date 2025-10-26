@@ -119,7 +119,7 @@ export class CommonPropCollector {
     const screenResolution = this.getScreenResolution()
     const viewportSize = this.getViewportSize()
     return {
-      url: document.URL,
+      url: location.href,
       path: location.pathname,
       title: document.title,
       referrer: document.referrer,
