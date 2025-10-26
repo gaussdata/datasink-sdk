@@ -1,4 +1,5 @@
 import type Reporter from '../Reporter'
+import { snapToGrid } from '../utils'
 import { URLQueue } from './URLQueue'
 
 function proxyHistory(api: 'pushState' | 'replaceState') {
@@ -41,11 +42,9 @@ function onUnload(callback: () => void) {
  */
 export class AutoEventCollector {
   reporter: Reporter | null = null
-
   startTime = Date.now()
-
+  duration = 0
   lastScrollTime = Date.now()
-
   urlQueue = new URLQueue()
 
   /**
@@ -59,6 +58,14 @@ export class AutoEventCollector {
       window.addEventListener('pushState', () => this.onPageChange())
       window.addEventListener('replaceState', () => this.onPageChange())
       window.addEventListener('popstate', () => this.onPageChange())
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          this.onPageVisible()
+        }
+        else if (document.visibilityState === 'hidden') {
+          this.onPageHidden()
+        }
+      })
     })
     onUnload(() => this.onPageLeave())
     document.addEventListener('click', e => this.onClick(e))
@@ -81,16 +88,16 @@ export class AutoEventCollector {
       element_id: element.id,
       element_class: element.className,
       element_content: element.textContent?.trim() || '',
-      page_x: e.pageX,
-      page_y: e.pageY,
+      page_x: snapToGrid(e.pageX, 10),
+      page_y: snapToGrid(e.pageY, 10),
     })
   }
 
-  onPageLoad() {
+  private onPageLoad() {
     this.reporter?.track('$page_load', {})
   }
 
-  onPageChange() {
+  private onPageChange() {
     setTimeout(() => {
       // 等待浏览器更新 URL 后再记录页面离开事件
       // 避免记录到相同的 URL
@@ -101,7 +108,7 @@ export class AutoEventCollector {
     }, 16)
   }
 
-  onPageView() {
+  private onPageView() {
     this.startTime = Date.now()
     this.urlQueue.enqueue(location.href)
     this.reporter?.track('$page_view', {
@@ -109,10 +116,21 @@ export class AutoEventCollector {
     })
   }
 
-  onPageLeave(url?: string) {
+  private onPageVisible() {
+    this.startTime = Date.now()
+  }
+
+  private onPageHidden() {
+    const interval = Date.now() - this.startTime
+    this.duration += interval
+  }
+
+  private onPageLeave(url?: string) {
+    const interval = Date.now() - this.startTime
+    this.duration += interval
     this.reporter?.track('$page_leave', {
       url: url || location.href,
-      duration: Date.now() - this.startTime,
+      duration: this.duration,
       view_position: window.scrollY + window.innerHeight,
     })
   }
