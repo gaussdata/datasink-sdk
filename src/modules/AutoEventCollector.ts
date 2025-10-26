@@ -44,6 +44,8 @@ export class AutoEventCollector {
 
   startTime = Date.now()
 
+  lastScrollTime = Date.now()
+
   urlQueue = new URLQueue()
 
   /**
@@ -60,6 +62,17 @@ export class AutoEventCollector {
     })
     onUnload(() => this.onPageLeave())
     document.addEventListener('click', e => this.onClick(e))
+    document.addEventListener('scroll', () => this.onScroll())
+  }
+
+  private onScroll() {
+    const now = Date.now()
+    if (now - this.lastScrollTime >= 1000) {
+      this.lastScrollTime = now
+      this.reporter?.track('$scroll', {
+        scroll_position: window.scrollY + window.innerHeight,
+      })
+    }
   }
 
   private onClick(e: MouseEvent) {
