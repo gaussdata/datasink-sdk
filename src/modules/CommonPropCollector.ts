@@ -124,7 +124,6 @@ export class CommonPropCollector {
       title: document.title,
       referrer: document.referrer,
 
-      dpr: this.getDevicePixelRatio(),
       user_agent: this.getUserAgent(),
       language: this.getLanguage(),
       os: this.getOS(),
@@ -132,10 +131,13 @@ export class CommonPropCollector {
       device_type: this.getDeviceType(),
       timezone: this.getTimezoneName(),
 
+      dpr: this.getDevicePixelRatio(),
       screen_width: screenResolution.width,
       screen_height: screenResolution.height,
+      screen_resolution: `${screenResolution.width}x${screenResolution.height}`,
       window_width: viewportSize.width,
       window_height: viewportSize.height,
+      window_resolution: `${viewportSize.width}x${viewportSize.height}`,
     }
   }
 }
