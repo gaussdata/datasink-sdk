@@ -12,15 +12,16 @@ export default class Reporter {
 
   private timer = 0
 
+  private consumeFn = () => this.consume()
+
   private isConsuming: boolean = false
 
   private url = '/t'
 
   private constructor() {
     this.queue = new Queue<EventData>(this.maxQueueSize)
-    this.timer = setInterval(() => {
-      this.consume()
-    }, 1000)
+    this.timer = setInterval(this.consumeFn, 1000)
+    window.addEventListener('beforeunload', this.consumeFn)
     new AutoEventCollector().init(this)
   }
 
@@ -96,12 +97,9 @@ export default class Reporter {
     })
   }
 
-  /**
-   * 销毁定时器
-   */
   public destroy(): void {
-    if (this.timer) {
-      clearInterval(this.timer)
-    }
+    this.consumeFn()
+    clearInterval(this.timer)
+    window.removeEventListener('beforeunload', this.consumeFn)
   }
 }
