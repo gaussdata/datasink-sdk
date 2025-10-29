@@ -49,20 +49,20 @@ export class CommonPropCollector {
    * 获取浏览器类型
    */
   static getBrowser() {
-    const userAgent = navigator.userAgent
-    if (userAgent.includes('Firefox')) {
+    const userAgentLower = navigator.userAgent.toLowerCase()
+    if (userAgentLower.includes('firefox')) {
       return 'Firefox'
     }
-    else if (userAgent.includes('Chrome')) {
+    else if (userAgentLower.includes('chrome')) {
       return 'Chrome'
     }
-    else if (userAgent.includes('Safari')) {
+    else if (userAgentLower.includes('safari')) {
       return 'Safari'
     }
-    else if (userAgent.includes('Opera')) {
+    else if (userAgentLower.includes('opera')) {
       return 'Opera'
     }
-    else if (userAgent.includes('MSIE') || userAgent.includes('Trident')) {
+    else if (userAgentLower.includes('msie') || userAgentLower.includes('trident')) {
       return 'IE'
     }
     else {
@@ -74,14 +74,14 @@ export class CommonPropCollector {
    * 获取操作系统类型
    */
   static getOS() {
-    const userAgent = navigator.userAgent
-    if (userAgent.includes('Windows')) {
+    const userAgentLower = navigator.userAgent.toLowerCase()
+    if (userAgentLower.includes('windows')) {
       return 'Windows'
     }
-    else if (userAgent.includes('Macintosh')) {
+    else if (userAgentLower.includes('macintosh')) {
       return 'Mac'
     }
-    else if (userAgent.includes('Linux')) {
+    else if (userAgentLower.includes('linux')) {
       return 'Linux'
     }
     else {
@@ -93,11 +93,11 @@ export class CommonPropCollector {
    * 获取设备类型
    */
   static getDeviceType() {
-    const userAgent = navigator.userAgent
-    if (userAgent.includes('Mobile')) {
+    const userAgentLower = navigator.userAgent.toLowerCase()
+    if (userAgentLower.includes('mobile')) {
       return 'Mobile'
     }
-    else if (userAgent.includes('Tablet')) {
+    else if (userAgentLower.includes('tablet')) {
       return 'Tablet'
     }
     else {
