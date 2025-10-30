@@ -1,3 +1,6 @@
+import loglevel from 'loglevel'
+import { Config } from './Config'
+
 export class URLQueue {
   private queue: string[] = []
   private maxLength = 10
@@ -9,9 +12,20 @@ export class URLQueue {
    * @returns 是否相同
    */
   isSameUrl(url1: string, url2: string) {
-    const url1Obj = new URL(url1)
-    const url2Obj = new URL(url2)
-    return url1Obj.origin === url2Obj.origin && url1Obj.pathname === url2Obj.pathname
+    if (!url1 || !url2) {
+      return false
+    }
+    try {
+      const url1Obj = new URL(url1)
+      const url2Obj = new URL(url2)
+      return url1Obj.origin === url2Obj.origin && url1Obj.pathname === url2Obj.pathname
+    }
+    catch (error) {
+      if (Config.debug) {
+        loglevel.error(`Error comparing URLs: ${error}`)
+      }
+      return false
+    }
   }
 
   top() {
