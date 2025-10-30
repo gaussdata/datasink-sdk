@@ -81,6 +81,12 @@ export class CommonPropCollector {
     else if (userAgentLower.includes('macintosh')) {
       return 'Mac'
     }
+    else if (userAgentLower.includes('android')) {
+      return 'Android'
+    }
+    else if (userAgentLower.includes('ios')) {
+      return 'iOS'
+    }
     else if (userAgentLower.includes('linux')) {
       return 'Linux'
     }
