@@ -1,46 +1,12 @@
 import type Reporter from '../Reporter'
-import { snapToGrid } from '../utils'
+import { getPageDuration, onLoad, onUnload, onView, proxyHistory, snapToGrid } from '../utils'
 import { URLQueue } from './URLQueue'
-
-function proxyHistory(api: 'pushState' | 'replaceState') {
-  const original = history[api]
-  history[api] = function (this: History, ...args: Parameters<History[typeof api]>) {
-    const result = original.apply(this, args)
-    const event = new Event(api)
-    window.dispatchEvent(event)
-    return result
-  }
-}
-
-proxyHistory('pushState')
-proxyHistory('replaceState')
-
-function onLoad(callback: () => void) {
-  if (document.readyState === 'complete') {
-    callback()
-  }
-  else {
-    window.addEventListener('load', callback)
-  }
-}
-
-function onView(callback: () => void) {
-  if (document.readyState === 'complete') {
-    callback()
-  }
-  else {
-    window.addEventListener('pageshow', callback)
-  }
-}
-
-function onUnload(callback: () => void) {
-  window.addEventListener('unload', callback)
-}
 
 /**
  * 自动埋点，监听页面加载、页面浏览、页面离开、元素点击等事件
  */
 export class AutoEventCollector {
+  _initialized = false
   reporter: Reporter | null = null
   startTime = Date.now()
   duration = 0
@@ -51,6 +17,12 @@ export class AutoEventCollector {
    * 初始化事件监听
    */
   public init(reporter: Reporter): void {
+    if (this._initialized) {
+      return
+    }
+    this._initialized = true
+    proxyHistory('pushState')
+    proxyHistory('replaceState')
     this.reporter = reporter
     onLoad(() => this.onPageLoad())
     onView(() => {
@@ -94,7 +66,9 @@ export class AutoEventCollector {
   }
 
   private onPageLoad() {
-    this.reporter?.track('$page_load', {})
+    this.reporter?.track('$page_load', {
+      duration: getPageDuration(),
+    })
   }
 
   private onPageChange() {

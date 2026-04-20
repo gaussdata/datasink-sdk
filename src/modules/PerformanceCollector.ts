@@ -8,9 +8,14 @@ interface IMetric {
 }
 
 export class PerformanceCollector {
+  _initialized = false
   private reporter: Reporter | null = null
 
   public init(reporter: Reporter): void {
+    if (this._initialized) {
+      return
+    }
+    this._initialized = true
     this.reporter = reporter
     this.collectCoreWebVitals()
   }
