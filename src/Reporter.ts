@@ -1,9 +1,8 @@
-import loglevel from 'loglevel'
 import { AutoEventCollector } from './modules/AutoEventCollector'
-import { Config } from './modules/Config'
 import { EventData } from './modules/EventData'
 import { PerformanceCollector } from './modules/PerformanceCollector'
 import { Queue } from './modules/Queue'
+import logger from './utils/logger'
 
 export default class Reporter {
   private static instance: Reporter
@@ -40,7 +39,7 @@ export default class Reporter {
   }
 
   static setDebug(debug: boolean) {
-    Config.debug = debug
+    logger.setLevel(debug ? 'debug' : 'info')
   }
 
   public track(code: string, data: Record<string, string | number | boolean>) {
@@ -98,9 +97,7 @@ export default class Reporter {
    */
   private processBatches(batches: EventData[][]): void {
     batches.forEach((batch, index) => {
-      if (Config.debug) {
-        loglevel.info(`Processing batch ${index + 1} with ${batch.length} events`)
-      }
+      logger.debug(`Processing batch ${index + 1} with ${batch.length} events`)
       const data = batch.map(EventData.toJson)
       navigator.sendBeacon(this.url, JSON.stringify(data))
     })

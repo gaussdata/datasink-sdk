@@ -1,5 +1,5 @@
-import loglevel from 'loglevel'
-import { Config } from './Config'
+import logger from '../utils/logger'
+
 /**
  * 页面信息采集工具类
  */
@@ -128,9 +128,7 @@ export class CommonPropCollector {
       return new URL(document.referrer).origin
     }
     catch (error) {
-      if (Config.debug) {
-        loglevel.info('Failed to parse referrer URL:', error)
-      }
+      logger.debug('Failed to parse referrer URL:', error)
       return ''
     }
   }

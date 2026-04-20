@@ -1,5 +1,5 @@
-import loglevel from 'loglevel'
-import { Config } from './Config'
+import logger from '../utils/logger'
+
 // Cookie 名称常量
 const ANONYMOUS_ID_COOKIE = 'ga_anonymous_id'
 const SESSION_ID_COOKIE = 'ga_session_id'
@@ -54,9 +54,7 @@ export class IdentityManager {
 
     // 设置SameSite=None和Secure以支持跨站使用
     const sameSite = window.location.protocol === 'https:' ? 'SameSite=None; Secure' : ''
-    if (Config.debug) {
-      loglevel.info(`Setting cookie: ${name}=${value};${expiresStr}path=/;${sameSite}`)
-    }
+    logger.debug(`Setting cookie: ${name}=${value};${expiresStr}path=/;${sameSite}`)
     document.cookie = `${name}=${value};${expiresStr}path=/;${sameSite}`
   }
 

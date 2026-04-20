@@ -1,5 +1,4 @@
-import loglevel from 'loglevel'
-import { Config } from './Config'
+import logger from '../utils/logger'
 
 export class URLQueue {
   private queue: string[] = []
@@ -21,9 +20,7 @@ export class URLQueue {
       return url1Obj.origin === url2Obj.origin && url1Obj.pathname === url2Obj.pathname
     }
     catch (error) {
-      if (Config.debug) {
-        loglevel.error(`Error comparing URLs: ${error}`)
-      }
+      logger.debug(`Error comparing URLs: ${error}`)
       return false
     }
   }
