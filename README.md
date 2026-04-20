@@ -50,16 +50,15 @@ GaussData.track('login', { method: 'password' })
 
 自动采集 Core Web Vitals 指标：
 
-- `$web_vitals_cls`：累积布局偏移（Cumulative Layout Shift），衡量页面元素的意外移动。
-- `$web_vitals_inp`：交互到下一次绘制（Interaction to Next Paint），衡量用户交互的响应时间（替代 FID）。
-- `$web_vitals_fcp`：首次内容绘制（First Contentful Paint），衡量页面开始显示内容的时间。
-- `$web_vitals_lcp`：最大内容绘制（Largest Contentful Paint），衡量页面主要内容加载完成的时间。
-- `$web_vitals_ttfb`：首字节时间（Time to First Byte），衡量服务器响应的时间。
+- `web_vitals_name: CLS`：累积布局偏移（Cumulative Layout Shift），衡量页面元素的意外移动。
+- `web_vitals_name: INP`：交互到下一次绘制（Interaction to Next Paint），衡量用户交互的响应时间（替代 FID）。
+- `web_vitals_name: FCP`：首次内容绘制（First Contentful Paint），衡量页面开始显示内容的时间。
+- `web_vitals_name: LCP`：最大内容绘制（Largest Contentful Paint），衡量页面主要内容加载完成的时间。
+- `web_vitals_name: TTFB`：首字节时间（Time to First Byte），衡量服务器响应的时间。
 
 每个性能指标事件包含以下数据：
-- `value`：指标数值。
-- `id`：指标唯一标识。
-- `entries`：相关性能条目数据（JSON 字符串）。
+- `web_vitals_value`：指标数值。
+- `web_vitals_id`：指标唯一标识。
 
 ## 手动埋点
 
