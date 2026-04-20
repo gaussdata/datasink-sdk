@@ -1,7 +1,7 @@
 {
   "name": "datasink-sdk",
   "type": "module",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "private": false,
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "loglevel": "^1.9.2"
+    "loglevel": "^1.9.2",
+    "web-vitals": "^5.2.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.0.0",

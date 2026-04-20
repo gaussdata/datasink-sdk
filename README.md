@@ -5,6 +5,7 @@
 ## 功能特性
 
 - 自动采集：页面加载、浏览、离开、点击等事件（`$page_load`、`$page_view`、`$page_leave`、`$element_click`）。
+- 性能采集：自动采集 Core Web Vitals 指标（`$web_vitals`）。
 - 环境采集：URL、UA、语言、OS、浏览器、设备类型、时区、屏幕与视口尺寸等。
 - 身份标识：自动生成并维护匿名 ID（2 年）与会话 ID（Session）。
 - 队列与批量：队列最大 1000 条，按 10 条/批，每秒消费并上报。
@@ -44,6 +45,21 @@ GaussData.track('login', { method: 'password' })
 - `$page_view`：进入页面或路由变化后触发，记录可视位置。
 - `$page_leave`：离开前触发，记录停留时长与可视位置。
 - `$element_click`：元素点击事件，包含元素 id/class/text 及点击坐标。
+
+## 性能埋点
+
+自动采集 Core Web Vitals 指标：
+
+- `$web_vitals_cls`：累积布局偏移（Cumulative Layout Shift），衡量页面元素的意外移动。
+- `$web_vitals_inp`：交互到下一次绘制（Interaction to Next Paint），衡量用户交互的响应时间（替代 FID）。
+- `$web_vitals_fcp`：首次内容绘制（First Contentful Paint），衡量页面开始显示内容的时间。
+- `$web_vitals_lcp`：最大内容绘制（Largest Contentful Paint），衡量页面主要内容加载完成的时间。
+- `$web_vitals_ttfb`：首字节时间（Time to First Byte），衡量服务器响应的时间。
+
+每个性能指标事件包含以下数据：
+- `value`：指标数值。
+- `id`：指标唯一标识。
+- `entries`：相关性能条目数据（JSON 字符串）。
 
 ## 手动埋点
 
