@@ -2,6 +2,7 @@ import loglevel from 'loglevel'
 import { AutoEventCollector } from './modules/AutoEventCollector'
 import { Config } from './modules/Config'
 import { EventData } from './modules/EventData'
+import { PerformanceCollector } from './modules/PerformanceCollector'
 import { Queue } from './modules/Queue'
 
 export default class Reporter {
@@ -11,7 +12,7 @@ export default class Reporter {
 
   private readonly maxQueueSize: number = 1000
 
-  private timer = 0
+  private timer: ReturnType<typeof setInterval> = setInterval(() => {}, 0)
 
   private consumeFn = () => this.consume()
 
@@ -24,6 +25,7 @@ export default class Reporter {
     this.timer = setInterval(this.consumeFn, 1000)
     window.addEventListener('beforeunload', this.consumeFn)
     new AutoEventCollector().init(this)
+    new PerformanceCollector().init(this)
   }
 
   static getInstance() {

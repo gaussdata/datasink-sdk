@@ -1,3 +1,5 @@
+import loglevel from 'loglevel'
+import { Config } from './Config'
 /**
  * 页面信息采集工具类
  */
@@ -118,6 +120,21 @@ export class CommonPropCollector {
     return Intl.DateTimeFormat().resolvedOptions().timeZone
   }
 
+  static getReferrer() {
+    if (!document.referrer) {
+      return ''
+    }
+    try {
+      return new URL(document.referrer).origin
+    }
+    catch (error) {
+      if (Config.debug) {
+        loglevel.info('Failed to parse referrer URL:', error)
+      }
+      return ''
+    }
+  }
+
   /**
    * 收集所有可用的页面信息
    */
@@ -128,14 +145,14 @@ export class CommonPropCollector {
       url: location.href,
       path: location.pathname,
       title: document.title,
-      referrer: document.referrer,
+      referrer: this.getReferrer(),
 
       user_agent: this.getUserAgent(),
-      language: this.getLanguage(),
       os: this.getOS(),
       browser: this.getBrowser(),
       device_type: this.getDeviceType(),
       timezone: this.getTimezoneName(),
+      language: this.getLanguage(),
 
       dpr: this.getDevicePixelRatio(),
       screen_width: screenResolution.width,
